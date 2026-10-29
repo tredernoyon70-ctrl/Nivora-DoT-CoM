@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="bn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#071426">
+  <title>Nivora DoT CoM | Online Shop</title>
+  <style>
+    :root{--navy:#071426;--blue:#1769ff;--ink:#152238;--muted:#66758b;--bg:#f4f7fb;--line:#e5eaf2}
+    *{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif;background:var(--bg);color:var(--ink)}
+    header{background:linear-gradient(135deg,#071426,#123c7a);color:white;padding:22px 16px 28px}
+    .wrap{max-width:1050px;margin:auto}.top{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:15px;background:linear-gradient(145deg,#42a5ff,#1744bd);display:grid;place-items:center;font-size:27px;font-weight:900;box-shadow:0 8px 22px #0003}
+    h1{font-size:clamp(21px,5vw,32px);margin:0}.tag{color:#cbdcff;margin:4px 0 0;font-size:14px}
+    .hero{padding:26px 0 4px}.hero h2{font-size:clamp(24px,6vw,38px);margin:0 0 8px;line-height:1.25}.hero p{margin:0;color:#dce8ff;max-width:600px}
+    main{padding:20px 14px 50px}.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 16px}.bar h2{margin:0;font-size:22px}.search{width:min(100%,300px);padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:inherit;background:white}
+    .status{background:#fff;border:1px solid var(--line);border-radius:12px;padding:13px 15px;color:var(--muted);margin-bottom:16px;font-size:14px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;overflow:hidden;box-shadow:0 5px 20px #10284a0a;display:flex;flex-direction:column}
+    .photo{height:200px;background:#edf3ff;display:grid;place-items:center;overflow:hidden;color:#8aa1c5;font-size:48px}.photo img{width:100%;height:100%;object-fit:cover}.details{padding:15px;display:flex;flex-direction:column;gap:8px;flex:1}.details h3{margin:0;font-size:18px}.desc{color:var(--muted);font-size:14px;line-height:1.5;min-height:38px}.price{font-size:21px;font-weight:800;color:#1455ce}.btn{border:0;border-radius:11px;padding:12px 14px;font:inherit;font-weight:700;cursor:pointer;background:var(--blue);color:#fff;text-align:center;text-decoration:none;display:block}.btn.secondary{background:#eaf1ff;color:#164bb3}.foot{margin-top:28px;text-align:center;color:var(--muted);font-size:13px}
+    .empty{padding:25px;text-align:center;color:var(--muted);grid-column:1/-1}.config{margin-top:30px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}.config summary{font-weight:700;cursor:pointer}.config p,.config li{font-size:14px;color:var(--muted);line-height:1.6}.config code{overflow-wrap:anywhere}
+  </style>
+</head>
+<body>
+<header><div class="wrap">
+  <div class="top"><div class="logo">N</div><div><h1>Nivora DoT CoM</h1><p class="tag">Your choices, your style ✨</p></div></div>
+  <section class="hero"><h2>আপনার পছন্দের পণ্য, এক জায়গায়</h2><p>ফ্যাশন, গ্যাজেট এবং দৈনন্দিন প্রয়োজনীয় পণ্য দেখুন। পণ্যের দাম ও বিবরণ যাচাই করে অর্ডারের জন্য যোগাযোগ করুন।</p></section>
+</div></header>
+<main class="wrap">
+  <div class="bar"><h2>আমাদের পণ্য</h2><input id="search" class="search" type="search" placeholder="পণ্য খুঁজুন…"></div>
+  <div id="status" class="status">ডেমো পণ্য দেখানো হচ্ছে। Supabase সংযোগ করতে নিচের নির্দেশনা অনুসরণ করুন।</div>
+  <section id="products" class="grid" aria-live="polite"></section>
+  <details class="config">
+    <summary>Supabase সংযোগের নির্দেশনা (সেটআপের জন্য)</summary>
+    <p>এই ফাইলটি এখন একটি নিরাপদ প্রাথমিক storefront template। আপনার Supabase Project URL ও <b>publishable/anon public key</b> বসিয়ে সংযোগ করতে হবে। কখনো <code>service_role</code> বা secret key ওয়েবসাইটে বসাবেন না।</p>
+    <ol>
+      <li>Supabase → Project Settings → API থেকে Project URL এবং publishable key নিন।</li>
+      <li>এই ফাইলের মধ্যে <code>SUPABASE_URL</code> ও <code>SUPABASE_PUBLIC_KEY</code> খুঁজে নিজের মান বসান।</li>
+      <li>আপনার <code>products</code> টেবিলের কলামের নাম অনুযায়ী নিচের product field mapping মিলিয়ে নিতে হবে।</li>
+      <li>লাইভ করার আগে database RLS policies এবং order submission flow পরীক্ষা করুন।</li>
+    </ol>
+    <p>নিরাপত্তার জন্য এই প্রাথমিক ফাইলে customer order সরাসরি database-এ লেখা হয় না; আপনার orders টেবিলের সঠিক কলাম ও validation নিশ্চিত হলে সেটি যোগ করা উচিত।</p>
+  </details>
+  <p class="foot">© <span id="year"></span> Nivora DoT CoM · Online Shop</p>
+</main>
+<script>
+  // Paste only your Supabase Project URL and publishable/anon public key here.
+  // NEVER paste a service_role or secret key into browser code.
+  const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+  const SUPABASE_PUBLIC_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE";
+
+  const demoProducts = [
+    {name:"K8 Wireless Earbuds", price:560, description:"ওয়্যারলেস ইয়ারবাডস — অর্ডারের আগে পণ্যের বিস্তারিত জেনে নিন।", image_url:""},
+    {name:"নতুন পণ্য শীঘ্রই", price:null, description:"আমাদের নতুন পণ্য যোগ করা হচ্ছে।", image_url:""}
+  ];
+  let allProducts = demoProducts;
+  const root = document.getElementById("products");
+  const statusBox = document.getElementById("status");
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  function field(p, keys, fallback="") {
+    for (const k of keys) if (p[k] !== undefined && p[k] !== null && p[k] !== "") return p[k];
+    return fallback;
+  }
+  function render(list) {
+    root.innerHTML = "";
+    if (!list.length) { root.innerHTML = '<div class="empty">কোনো পণ্য পাওয়া যায়নি।</div>'; return; }
+    list.forEach((p) => {
+      const name = field(p, ["name","title","product_name"], "পণ্যের নাম");
+      const price = field(p, ["price","selling_price","amount"], null);
+      const desc = field(p, ["description","details","product_description"], "পণ্যের বিস্তারিত জানতে যোগাযোগ করুন।");
+      const img = field(p, ["image_url","image","image_link","photo_url"], "");
+      const card = document.createElement("article"); card.className = "card";
+      const photo = document.createElement("div"); photo.className = "photo";
+      if (img && /^https?:\/\//i.test(String(img))) {
+        const image = document.createElement("img"); image.src = img; image.alt = String(name); image.loading = "lazy";
+        image.onerror = () => { photo.innerHTML = "🛍️"; }; photo.appendChild(image);
+      } else { photo.textContent = "🛍️"; }
+      const details = document.createElement("div"); details.className = "details";
+      const title = document.createElement("h3"); title.textContent = String(name);
+      const description = document.createElement("div"); description.className = "desc"; description.textContent = String(desc);
+      const cost = document.createElement("div"); cost.className = "price"; cost.textContent = price !== null ? `${price}৳` : "দাম জানতে যোগাযোগ করুন";
+      const contact = document.createElement("a"); contact.className = "btn secondary"; contact.href = "https://m.me/"; contact.target = "_blank"; contact.rel = "noopener"; contact.textContent = "অর্ডার/বিস্তারিত জানতে";
+      details.append(title, description, cost, contact); card.append(photo, details); root.appendChild(card);
+    });
+  }
+  async function loadSupabaseProducts() {
+    if (!SUPABASE_URL.startsWith("https://") || SUPABASE_PUBLIC_KEY.includes("PASTE_")) {
+      render(allProducts); return;
+    }
+    try {
+      const response = await fetch(`${SUPABASE_URL.replace(/\/$/,"")}/rest/v1/products?select=*`, {
+        headers: { apikey: SUPABASE_PUBLIC_KEY, Authorization: `Bearer ${SUPABASE_PUBLIC_KEY}` }
+      });
+      if (!response.ok) throw new Error(`Supabase returned ${response.status}`);
+      const data = await response.json();
+      allProducts = data.length ? data : demoProducts;
+      statusBox.textContent = data.length ? "Supabase থেকে পণ্য লোড হয়েছে।" : "Supabase-এ পণ্য পাওয়া যায়নি; নমুনা পণ্য দেখানো হচ্ছে।";
+      render(allProducts);
+    } catch (e) {
+      statusBox.textContent = "Supabase সংযোগ হয়নি; নমুনা পণ্য দেখানো হচ্ছে। URL, public key, table ও RLS policy পরীক্ষা করুন।";
+      render(demoProducts);
+    }
+  }
+  document.getElementById("search").addEventListener("input", e => {
+    const q = e.target.value.trim().toLowerCase();
+    render(allProducts.filter(p => [p.name,p.title,p.product_name,p.description,p.details].filter(Boolean).join(" ").toLowerCase().includes(q)));
+  });
+  render(demoProducts);
+  loadSupabaseProducts();
+</script>
+</body>
+</html>
